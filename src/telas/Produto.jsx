@@ -35,8 +35,8 @@ function Produto() {
         setShowModal(false);
     };
 
-    const atualizarProduto = async (id, produto) => {
-        const retornoAPI = await atualizarProdutoAPI(id, produto);
+    const atualizarProduto = async (produto) => {
+        const retornoAPI = await atualizarProdutoAPI(produto);
         setAlerta({ status: retornoAPI.status, message: retornoAPI.message });
         recuperarProdutos();
         setShowModal(false);
@@ -54,7 +54,7 @@ function Produto() {
         e.preventDefault();
 
         if (isEditing) {
-            await atualizarProduto(produtoAtual.id, produtoAtual);
+            await atualizarProduto(produtoAtual);
         } else {
             await criarProduto(produtoAtual);
         }

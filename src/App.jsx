@@ -25,7 +25,7 @@ const router = createBrowserRouter([
         element: <Pedido />,
       },
       {
-        path: "/aplicacao",
+        path: "/agendamento",
         element: <Agendamento />,
       },  
       {

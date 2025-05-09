@@ -10,7 +10,7 @@ function Pedido() {
     const [listaPedidos, setListaPedidos] = useState([]);
     const [showModal, setShowModal] = useState(false); 
     const [pedidoAtual, setPedidoAtual] = useState({
-        cliente_nome: "", cliente_telefone: "", data_pedido: "", status: ""
+        cliente_id: "", cliente_nome: "", cliente_telefone: "", data_pedido: "", status: ""
     }); 
     const [isEditing, setIsEditing] = useState(false); 
 
@@ -18,7 +18,6 @@ function Pedido() {
         const pedidos = await getPedidosAPI(); 
         console.log(pedidos);
         setListaPedidos(pedidos);
-
     };
 
     const removerPedido = async id => {
@@ -44,7 +43,7 @@ function Pedido() {
     };
 
     const openModal = (pedido = {
-        cliente_nome: "", cliente_telefone: "", data_pedido: "", status: ""
+        cliente_id: "", cliente_nome: "", cliente_telefone: "", data_pedido: "", status: ""
     }) => {
         setPedidoAtual(pedido);
         setIsEditing(pedido.id ? true : false); 
@@ -54,9 +53,8 @@ function Pedido() {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-
         if (isEditing) {
-            await atualizarPedido(pedidoAtual.id, pedidoAtual);
+            await atualizarPedido(pedidoAtual);  // Passa o objeto completo
         } else {
             await criarPedido(pedidoAtual);
         }
@@ -76,7 +74,6 @@ function Pedido() {
             atualizarPedido
         }}>
             <div className="container mt-4">
-              
                 {alerta.message && (
                     <div className={`alert alert-${alerta.status}`} role="alert">
                         {alerta.message}
@@ -118,6 +115,15 @@ function Pedido() {
                     </Modal.Header>
                     <Modal.Body>
                         <Form onSubmit={handleSubmit}>
+                            <Form.Group controlId="cliente_id">
+                                <Form.Label>ID do Cliente</Form.Label>
+                                <Form.Control
+                                    type="text"
+                                    placeholder="ID do cliente"
+                                    value={pedidoAtual.cliente_id}
+                                    onChange={(e) => setPedidoAtual({ ...pedidoAtual, cliente_id: e.target.value })}
+                                />
+                            </Form.Group>
                             <Form.Group controlId="cliente_nome">
                                 <Form.Label>Nome do Cliente</Form.Label>
                                 <Form.Control

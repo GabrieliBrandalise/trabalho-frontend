@@ -35,8 +35,8 @@ function Cliente() {
         setShowModal(false);
     };
 
-    const atualizarCliente = async (id, cliente) => {
-        const retornoAPI = await atualizarClienteAPI(id, cliente);
+    const atualizarCliente = async (cliente) => {
+        const retornoAPI = await atualizarClienteAPI(cliente);
         setAlerta({ status: retornoAPI.status, message: retornoAPI.message });
         recuperarClientes();
         setShowModal(false);
@@ -54,7 +54,7 @@ function Cliente() {
         e.preventDefault();
 
         if (isEditing) {
-            await atualizarCliente(clienteAtual.id, clienteAtual);
+            await atualizarCliente(clienteAtual);
         } else {
             await adicionarCliente(clienteAtual);
         }
